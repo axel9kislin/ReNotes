@@ -6,6 +6,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -45,7 +46,23 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<CustomViewHolder> {
         //Setting text view title
         //CustomViewHolder.TextView.setText(Html.fromHtml(nItem.getTitle()));
 
+        holder.textTitle.setOnClickListener(clickListener);
+        holder.imageView.setOnClickListener(clickListener);
+
+        holder.textTitle.setTag(holder);
+        holder.imageView.setTag(holder);
     }
+
+    View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            CustomViewHolder holder = (CustomViewHolder) view.getTag();
+            int position = holder.getPosition();
+
+            NoteItem feedItem = noteItemList.get(position);
+            Toast.makeText(mContext, feedItem.getTitle(), Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
     public int getItemCount() {
