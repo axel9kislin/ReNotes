@@ -58,6 +58,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<CustomViewHolder> {
     View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            //фигня полная, перепишу
             CustomViewHolder holder = (CustomViewHolder) view.getTag();
             int position = holder.getPosition();
 

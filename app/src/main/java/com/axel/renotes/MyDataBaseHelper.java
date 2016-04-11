@@ -20,7 +20,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE NOTES (_id INTEGER PRIMATY KEY AUTOINCREMENT, " +
+        db.execSQL("CREATE TABLE NOTES (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "NAME TEXT" +
                 "DESCRIPTION TEXT" +
                 "IMAGE_RESOURCE_ID INTEGER);");
