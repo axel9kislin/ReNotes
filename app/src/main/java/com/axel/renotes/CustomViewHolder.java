@@ -9,6 +9,7 @@ import android.widget.TextView;
  * Created by Александр on 08.04.2016.
  */
 public class CustomViewHolder extends RecyclerView.ViewHolder {
+
     protected ImageView imageView;
     protected TextView textTitle;
     protected TextView textDisc;

@@ -8,6 +8,16 @@
         android:layout_width="match_parent"
         android:layout_height="80dp">
 
+
+
+        <ImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,16 +31,6 @@
             android:layout_centerHorizontal="true"
 
             />
-
-        <ImageView
-            android:id="@+id/thumbnail"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/placeholder" />
-
         <TextView
             android:id="@+id/disc"
             android:layout_width="match_parent"

@@ -2,7 +2,6 @@ package com.axel.renotes;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,9 +33,12 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<CustomViewHolder> {
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int i) {
 
+        //ОнБиндВьюХолдер - это заполнение наших вьюшек элементами из класса, в котором хранится информация о заметках.
         NoteItem nItem = noteItemList.get(i);
+        holder.textTitle.setText(nItem.getTitle());
+        holder.textDisc.setText(nItem.getDisc());
+        holder.imageView.setImageResource(R.drawable.placeholder); //пока что это так, потом задумаюсь о загрузке из галлереи или камеры
 
-        //здесь видимо задать заполнение полей вьюхолдера?
         //Download image using picasso library
 //        Picasso.with(mContext).load(feedItem.getThumbnail())
 //                .error(R.drawable.placeholder)
