@@ -1,6 +1,7 @@
 package com.axel.renotes;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +15,12 @@ import java.util.List;
  */
 public class MyRecyclerAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
-    private List<NoteItem> noteItemList;
+    private Cursor c;
     private Context mContext;
 
-    public MyRecyclerAdapter(Context context, List<NoteItem> noteItemList) {
-        this.noteItemList = noteItemList;
-        this.mContext = context;
+    public MyRecyclerAdapter(Context context, Cursor cursor) {
+        c = cursor;
+        mContext = context;
     }
 
     @Override
@@ -34,10 +35,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<CustomViewHolder> {
     public void onBindViewHolder(CustomViewHolder holder, int i) {
 
         //ОнБиндВьюХолдер - это заполнение наших вьюшек элементами из класса, в котором хранится информация о заметках.
-        NoteItem nItem = noteItemList.get(i);
-        holder.textTitle.setText(nItem.getTitle());
-        holder.textDisc.setText(nItem.getDisc());
-        holder.imageView.setImageResource(R.drawable.placeholder); //пока что это так, потом задумаюсь о загрузке из галлереи или камеры
+        holder.textTitle.setText(c.getString(0));
+        holder.textDisc.setText(c.getString(1));
+        holder.imageView.setImageResource(c.getInt(2));
 
         //Download image using picasso library
 //        Picasso.with(mContext).load(feedItem.getThumbnail())
@@ -55,21 +55,16 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<CustomViewHolder> {
         holder.imageView.setTag(holder);
     }
 
+    @Override
+    public int getItemCount() {
+        return c.getCount();
+    }
+
     View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             //фигня полная, перепишу
-            CustomViewHolder holder = (CustomViewHolder) view.getTag();
-            int position = holder.getPosition();
 
-            NoteItem feedItem = noteItemList.get(position);
-            Toast.makeText(mContext, feedItem.getTitle(), Toast.LENGTH_SHORT).show();
         }
     };
-
-    @Override
-    public int getItemCount() {
-        return (null != noteItemList ? noteItemList.size() : 0);
-    }
-
 }
