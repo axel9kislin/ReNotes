@@ -29,7 +29,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
                 "DESCRIPTION TEXT, " +
                 "IMAGE_RESOURCE_ID INTEGER);");
         Log.d("MyLogs", "it is readOnly?" + db.isReadOnly());
-        for (int i=0;i<99;i++){
+        for (int i=0;i<=99;i++){
             insertNote(db, "Тестим лист на анимацию "+i, "Тест вставки русского шрифта)", R.drawable.placeholder);
         }
 

@@ -64,6 +64,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<CustomViewHolder> {
     View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            //здесь будет открытие фрагмента, и видимо возможность редактирования, кнопки едит и сейв
             Log.d("MyLogs","onClick on item recyclerView");
         }
     };
