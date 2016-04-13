@@ -3,9 +3,12 @@ package com.axel.renotes;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -15,56 +18,53 @@ import java.util.List;
  */
 public class MyRecyclerAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
-    private Cursor c;
     private Context mContext;
+    public CursorAdapter mCursorAdapter;
 
     public MyRecyclerAdapter(Context context, Cursor cursor) {
-        c = cursor;
         mContext = context;
+
+        mCursorAdapter = new CursorAdapter(mContext, cursor, 0) {
+            @Override
+            public View newView(Context context, Cursor cursor, ViewGroup parent) {
+                View view = LayoutInflater.from(context).inflate(R.layout.view_list_item, null);
+                return view;
+            }
+
+            @Override
+            public void bindView(View view, Context context, Cursor cursor) {
+                TextView text = (TextView)view.findViewById(R.id.textViewListItem);
+                text.setText(cursor.getString(1));
+            }
+        };
     }
 
     @Override
-    public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_row, null);
+    public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
-        CustomViewHolder viewHolder = new CustomViewHolder(view);
-        return viewHolder;
+        View v = mCursorAdapter.newView(mContext, mCursorAdapter.getCursor(), viewGroup);
+        return new CustomViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int i) {
 
-        //ОнБиндВьюХолдер - это заполнение наших вьюшек элементами из класса, в котором хранится информация о заметках.
-        holder.textTitle.setText(c.getString(0));
-        holder.textDisc.setText(c.getString(1));
-        holder.imageView.setImageResource(c.getInt(2));
+        mCursorAdapter.getCursor().moveToPosition(i);
+        mCursorAdapter.bindView(holder.itemView, mContext, mCursorAdapter.getCursor());
 
-        //Download image using picasso library
-//        Picasso.with(mContext).load(feedItem.getThumbnail())
-//                .error(R.drawable.placeholder)
-//                .placeholder(R.drawable.placeholder)
-//                .into(customViewHolder.imageView);
-
-        //Setting text view title
-        //CustomViewHolder.TextView.setText(Html.fromHtml(nItem.getTitle()));
-
-        holder.textTitle.setOnClickListener(clickListener);
-        holder.imageView.setOnClickListener(clickListener);
-
-        holder.textTitle.setTag(holder);
-        holder.imageView.setTag(holder);
+        holder.v1.setOnClickListener(clickListener);
+        //holder.v1.setTag(holder);
     }
 
     @Override
     public int getItemCount() {
-        return c.getCount();
+        return mCursorAdapter.getCount();
     }
 
     View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            //фигня полная, перепишу
-
+            Log.d("MyLogs","onClick on item recyclerView");
         }
     };
 }

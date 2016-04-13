@@ -10,14 +10,9 @@ import android.widget.TextView;
  */
 public class CustomViewHolder extends RecyclerView.ViewHolder {
 
-    protected ImageView imageView;
-    protected TextView textTitle;
-    protected TextView textDisc;
-
+    View v1;
     public CustomViewHolder(View view) {
         super(view);
-        this.imageView = (ImageView) view.findViewById(R.id.thumbnail);
-        this.textTitle = (TextView) view.findViewById(R.id.titleNote);
-        this.textDisc = (TextView) view.findViewById(R.id.disc);
+       v1 = view.findViewById(R.id.v1);
     }
 }

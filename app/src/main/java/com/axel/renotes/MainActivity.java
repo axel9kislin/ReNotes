@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "we in try, after acsess");
             //получаем данные в курсор, всё из базы, для того чтоб потом это вывести в наш recyclerView
             cursor = db.query("NOTES",
-                    new String[] {"NAME","DESCRIPTION","IMAGE_RESOURCE_ID"},
+                    null,
                     null,null,null,null,null);
         }
         catch (SQLiteException e) {
@@ -51,23 +51,5 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new MyRecyclerAdapter(MainActivity.this, cursor);
         mRecyclerView.setAdapter(adapter);
-
-
-        if (cursor.moveToFirst()) {
-            do {
-
-                        //String nameText = cursor.getString(0);
-                        //String descText = cursor.getString(1);
-                        //int img_res = cursor.getInt(2);
-                        //получили в переменные, теперь нам бы закинуть это в адаптер для ресайкла, или как-то передать в общем на
-                        //отрисовку интерфейсу
-
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
-            db.close();
-
-
-
     }
 }
