@@ -3,23 +3,21 @@ package com.axel.renotes;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.List;
 
 /**
  * Created by Александр on 08.04.2016.
  */
-public class MyRecyclerAdapter extends RecyclerView.Adapter<CustomViewHolder> {
+public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.CustomViewHolder> {
 
     private Context mContext;
     public CursorAdapter mCursorAdapter;
+    OnItemClickListener mItemClickListener;
 
     public MyRecyclerAdapter(Context context, Cursor cursor) {
         mContext = context;
@@ -51,9 +49,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
         mCursorAdapter.getCursor().moveToPosition(i);
         mCursorAdapter.bindView(holder.itemView, mContext, mCursorAdapter.getCursor());
-
-        holder.v1.setOnClickListener(clickListener);
-        //holder.v1.setTag(holder);
     }
 
     @Override
@@ -61,11 +56,26 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<CustomViewHolder> {
         return mCursorAdapter.getCount();
     }
 
-    View.OnClickListener clickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            //здесь будет открытие фрагмента, и видимо возможность редактирования, кнопки едит и сейв
-            Log.d("MyLogs","onClick on item recyclerView");
+    //реализация холдера
+    public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        View v1;
+        public CustomViewHolder(View view) {
+            super(view);
+            v1 = view.findViewById(R.id.v1);
+            view.setOnClickListener(this);
         }
-    };
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(v, getPosition());
+            }
+        }
+    }
+    public interface OnItemClickListener {
+        void onItemClick(View view , int position);
+    }
+    public void SetOnItemClickListener(final OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
+    }
 }
