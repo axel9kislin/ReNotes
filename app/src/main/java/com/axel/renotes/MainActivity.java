@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity {
@@ -43,7 +44,10 @@ public class MainActivity extends FragmentActivity {
         try {
             helper = new MyDataBaseHelper(this);
             db = helper.getReadableDatabase();
-            cursor = db.query("NOTES",null,null,null,null,null,null);
+            cursor = db.query("NOTES",
+                    new String[] {"_id","NAME","DESCRIPTION","IMAGE_RESOURCE_ID"},
+                    null,
+                    null,null,null,null);
         }
         catch (SQLiteException e) {
             Toast toast = Toast.makeText(this, "Database in unvailable", Toast.LENGTH_LONG);
@@ -51,13 +55,27 @@ public class MainActivity extends FragmentActivity {
         }
 
         adapter = new MyRecyclerAdapter(MainActivity.this, cursor);
-        adapter.SetOnItemClickListener(new MyRecyclerAdapter.OnItemClickListener() {
+        adapter.SetOnItemClickListener(new MyRecyclerAdapter.OnItemClickListener()
+        {
             @Override
             public void onItemClick(View view, int position) {
                 transaction = manager.beginTransaction();
                 if (manager.findFragmentById(R.id.v1)==null)
                 {
-                    transaction.add(R.id.v1, fragment);
+                    cursor = db.query("NOTES",
+                            new String[] {"_id","NAME","DESCRIPTION","IMAGE_RESOURCE_ID"},
+                            "_id = ?",
+                            new String[] {Integer.toString(position)},
+                            null,null,null);
+                    Fragment1 fr = new Fragment1();
+                    Bundle bundle = new Bundle();
+                    
+                    fr.setArguments(bundle);
+                    Log.d(TAG, "clicked on " + position + " item");
+//                    TextView title = (TextView)findViewById(R.id.titleNote);
+//                    title.setText("clicked "+position); такой подход не рабоает
+                    transaction.add(view.getId(),fragment);
+
                 }
                 else
                 {
