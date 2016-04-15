@@ -69,7 +69,7 @@ public class MainActivity extends FragmentActivity {
                             null,null,null);
                     Fragment1 fr = new Fragment1();
                     Bundle bundle = new Bundle();
-                    
+
                     fr.setArguments(bundle);
                     Log.d(TAG, "clicked on " + position + " item");
 //                    TextView title = (TextView)findViewById(R.id.titleNote);
@@ -86,11 +86,4 @@ public class MainActivity extends FragmentActivity {
         });
         mRecyclerView.setAdapter(adapter);
     }
-
-    View.OnClickListener clickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-        }
-    };
 }
