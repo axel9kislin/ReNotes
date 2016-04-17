@@ -53,18 +53,15 @@ public class activity_change extends AppCompatActivity {
     {
         helper = new MyDataBaseHelper(this);
         db = helper.getWritableDatabase();
-        Log.d("MyLogs", "OnSaveChanges handler");
         String dataFromTitleEdit = titleChanged.getText().toString();
         String dataFromDescEdit = descChanged.getText().toString();
         ContentValues cv = new ContentValues();
-        cv.put("NAME",dataFromTitleEdit);
+        cv.put("NAME", dataFromTitleEdit);
         cv.put("DESCRIPTION", dataFromDescEdit);
-        Log.d("MyLogs", "we added in cv " + cv.get("TITLE"));
-        Log.d("MyLogs","we added in cv "+cv.get("DESCRIPTION"));
-        Log.d("MyLogs","we want change id: "+id_changing);
         int updCount = db.update("NOTES", cv, "_id = ?",
                 new String[]{id_changing});
         Log.d("MyLogs", "updated rows count = " + updCount);
+
         finish();
     }
 

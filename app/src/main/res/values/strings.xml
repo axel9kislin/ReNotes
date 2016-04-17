@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">ReNotes</string>
     <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="change_labelTitle">Title:</string>
+    <string name="label_disc">Description:</string>
 </resources>

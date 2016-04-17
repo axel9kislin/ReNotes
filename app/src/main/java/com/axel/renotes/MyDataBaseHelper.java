@@ -27,12 +27,10 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE NOTES (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "NAME TEXT, " +
                 "DESCRIPTION TEXT, " +
-                "IMAGE_RESOURCE_ID INTEGER);");
-        Log.d("MyLogs", "it is readOnly?" + db.isReadOnly());
-        for (int i=0;i<=99;i++){
-            insertNote(db, "Тестим лист на анимацию "+i, "Тест вставки "+i+" русского шрифта)", R.drawable.placeholder);
-        }
-
+                "IMAGE_RESOURCE_ID TEXT);");
+        insertNote(db, "Тестим лист на анимацию ", "Тест вставки русского шрифта", "тратата");
+        insertNote(db, "Тестовая запись 2 ", "надо навтыкать)", "какой-то ресурс");
+        insertNote(db, "запись 3 ", "ага, и сюда", "прыньк");
     }
 
     @Override
@@ -40,16 +38,12 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public static void insertNote(SQLiteDatabase db, String name, String desc, int res_id)
+    public static void insertNote(SQLiteDatabase db, String name, String desc, String res_id)
     {
-
         ContentValues cv = new ContentValues();
         cv.put("NAME", name);
-        Log.d("MyLogs", "we have in cv.name is " + cv.get("NAME") + " string");
         cv.put("DESCRIPTION", desc);
-        Log.d("MyLogs", "we have in cv.desc is " + cv.get("DESCRIPTION") + " string");
         cv.put("IMAGE_RESOURCE_ID", res_id);
-        Log.d("MyLogs", "we have in cv.image_resources is " + cv.get("IMAGE_RESOURCE_ID") + " string");
         try
         {
             long rowID = db. insertOrThrow("NOTES", null, cv);

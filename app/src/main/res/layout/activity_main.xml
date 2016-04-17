@@ -3,19 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
     android:background="#55AB9E"
     tools:context="com.axel.renotes.MainActivity">
 
-    <view
-        android:id="@+id/recycler_view"
-        class="android.support.v7.widget.RecyclerView"
+    <fragment
         android:layout_width="match_parent"
-        android:scrollbars="vertical"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true" />
+        android:name="com.axel.renotes.Fragment_with_RecyclerView"
+        android:id="@+id/currentFragment"
+        />
 
 </RelativeLayout>

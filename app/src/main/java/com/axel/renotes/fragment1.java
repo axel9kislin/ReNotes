@@ -1,5 +1,6 @@
 package com.axel.renotes;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -11,13 +12,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Александр on 13.04.2016.
  */
-public class Fragment1 extends DialogFragment {
+public class Fragment1 extends DialogFragment implements View.OnClickListener {
 
     int postedID;
     private MyDataBaseHelper helper;
@@ -26,9 +29,7 @@ public class Fragment1 extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("MyLogs", "we in onCreate fragment");
-        postedID = getArguments().getInt("index", 0);
-        Log.d("MyLogs","we can add args? "+postedID);
+        postedID = getArguments().getInt("index", 0)+1;
         try {
             helper = new MyDataBaseHelper(getContext());
             db = helper.getReadableDatabase();
@@ -37,28 +38,31 @@ public class Fragment1 extends DialogFragment {
                     "_id = ?",
                     new String[]{Integer.toString(postedID)},
                     null, null, null);
-            Log.d("MyLogs","what have in cursor"+cursor.getColumnName(1));
+            Log.d("MyLogs","what have in cursor "+cursor.getCount()+" items");
         }
         catch (SQLiteException e) {
-            Log.d("MyLogs", e.getMessage());
+            Toast toast = Toast.makeText(getContext(),"Problem with connect to database",Toast.LENGTH_LONG);
+            toast.show();
         }
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.list_row, null);
-        Log.d("MyLogs","we in onCreateView");
+
         ImageView tempImg = (ImageView)v.findViewById(R.id.thumbnail);
         TextView tempTitle = (TextView)v.findViewById(R.id.titleNote);
         TextView tempDisc = (TextView)v.findViewById(R.id.disc);
+        Button btnEdit = (Button)v.findViewById(R.id.btn_edit);
+        Button btnDelete = (Button)v.findViewById(R.id.btn_delete);
+        btnEdit.setOnClickListener(this);
+        btnDelete.setOnClickListener(this);
+
+
         cursor.moveToFirst();
-        Log.d("MyLogs", "we finding all our items");
-        String x = cursor.getString(1);
-        Log.d("MyLogs", "we have in x: "+x);
-        tempTitle.setText(x); //здесь ошибка
-        Log.d("MyLogs", "we can set Name");
+        tempTitle.setText(cursor.getString(1));
         tempDisc.setText(cursor.getString(2));
         tempImg.setImageResource(R.drawable.placeholder); //пока что это так, затем переделаю
-        Log.d("MyLogs", "we set our params");
+
         return v;
     }
 
@@ -73,12 +77,11 @@ public class Fragment1 extends DialogFragment {
 
     public void btn_editClick (View view)
     {
-        Log.d("MyLogs","we in editClick handler");
-    }
-
-    public void btn_saveClick (View view)
-    {
-        Log.d("MyLogs","we in saveClick handler");
+        String str_id = String.valueOf(postedID);
+        Log.d("MyLogs", "we in editClick handler");
+        Intent intent = new Intent(getActivity(),activity_change.class); // в случае вызова интента из фрагмента юзаем не this, a getActivity()
+        intent.putExtra(activity_change.extra_data,str_id);
+        startActivity(intent);                                          //потому что фрагмент не знает заранее из какого активити он будет вызван
     }
 
     public void btn_deleteClick (View view)
@@ -87,4 +90,23 @@ public class Fragment1 extends DialogFragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.btn_edit:
+            {btn_editClick(v);
+                break;}
+            case R.id.btn_delete:
+            {btn_deleteClick(v);
+                break;}
+        }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //незнаю пока как тут изменить, обновить
+    }
 }

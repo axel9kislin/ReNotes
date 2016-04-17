@@ -23,11 +23,10 @@ public class Fragment_with_RecyclerView extends Fragment {
 
     private String TAG = "MyLogs";
     private RecyclerView mRecyclerView;
-    private MyRecyclerAdapter adapter;
+    public MyRecyclerAdapter adapter;
     private MyDataBaseHelper helper;
     private Cursor cursor;
     private SQLiteDatabase db;
-    private android.support.v4.app.FragmentManager manager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,7 +41,6 @@ public class Fragment_with_RecyclerView extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         mRecyclerView.setItemAnimator(itemAnimator);
-        manager = getFragmentManager();
 
         try {
             helper = new MyDataBaseHelper(getContext());
@@ -72,16 +70,6 @@ public class Fragment_with_RecyclerView extends Fragment {
     @Override //не выход
     public void onResume() {
         super.onResume();
-        try {
-            helper = new MyDataBaseHelper(getContext());
-            db = helper.getReadableDatabase();
-            cursor = db.query("NOTES",
-                    new String[] {"_id","NAME","DESCRIPTION","IMAGE_RESOURCE_ID"},
-                    null,
-                    null,null,null,null);
-        }
-        catch (SQLiteException e) {
-            Log.d(TAG,e.getMessage());
-        }
+        onActivityCreated(null);
     }
 }
