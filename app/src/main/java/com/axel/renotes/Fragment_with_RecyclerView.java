@@ -27,9 +27,7 @@ public class Fragment_with_RecyclerView extends Fragment {
     private MyDataBaseHelper helper;
     private Cursor cursor;
     private SQLiteDatabase db;
-    private DialogFragment more_info;
     private android.support.v4.app.FragmentManager manager;
-    private android.support.v4.app.FragmentTransaction transaction;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,19 +61,27 @@ public class Fragment_with_RecyclerView extends Fragment {
             @Override
             public void onItemClick(View view, int position)
             {
-                Log.d(TAG, "we in OnItemClick");
-//                Bundle arg = new Bundle();
-//                Log.d(TAG, "we declarated bundle arg");
-//                arg.putInt("id", position);
-//                Log.d(TAG, "we add in budle our id");
-                //more_info = new Fragment1();
                 Fragment1 tempFrg = new Fragment1().newInstance(position);
-                Log.d(TAG, "we create our dialogFragment");
                 tempFrg.show(getFragmentManager(), null);
-                Log.d(TAG, "we do show our fragment");
                 Log.d(TAG, "clicked on " + position + " item");
             }
         });
         mRecyclerView.setAdapter(adapter);
+    }
+
+    @Override //не выход
+    public void onResume() {
+        super.onResume();
+        try {
+            helper = new MyDataBaseHelper(getContext());
+            db = helper.getReadableDatabase();
+            cursor = db.query("NOTES",
+                    new String[] {"_id","NAME","DESCRIPTION","IMAGE_RESOURCE_ID"},
+                    null,
+                    null,null,null,null);
+        }
+        catch (SQLiteException e) {
+            Log.d(TAG,e.getMessage());
+        }
     }
 }
