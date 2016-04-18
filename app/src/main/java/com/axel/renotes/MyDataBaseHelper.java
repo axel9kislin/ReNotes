@@ -28,8 +28,8 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
                 "DESCRIPTION TEXT, " +
                 "IMAGE_RESOURCE_ID TEXT);");
         insertNote(db, "Тестим лист на анимацию ", "Тест вставки русского шрифта", "тратата");
-        insertNote(db, "Тестовая запись 2 ", "надо вставить что-то", "какой-то ресурс");
-        insertNote(db, "запись 3 ", "начальная запись", "ресурс");
+        insertNote(db, "Тестовая запись 2 ", "Описание для заметки", "какой-то ресурс");
+        insertNote(db, "3-я запись, тесты", "Работает :)", "ресурс");
     }
 
     @Override
