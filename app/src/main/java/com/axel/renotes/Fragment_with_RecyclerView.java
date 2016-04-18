@@ -14,8 +14,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * Created by Александр on 15.04.2016.
@@ -29,12 +31,20 @@ public class Fragment_with_RecyclerView extends Fragment {
     private Cursor cursor;
     private  SQLiteDatabase db;
     private FloatingActionButton fab;
+    private FloatingActionButton settings;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_recycle, null);
         mRecyclerView = (RecyclerView)v.findViewById(R.id.recycler_view_inFr);
         fab = (FloatingActionButton)v.findViewById(R.id.fab);
+        settings = (FloatingActionButton)v.findViewById(R.id.set);
         return v;
     }
 
@@ -62,7 +72,11 @@ public class Fragment_with_RecyclerView extends Fragment {
             @Override
             public void onItemClick(View view, int position)
             {
-                Fragment1 tempFrg = new Fragment1().newInstance(position);
+                TextView tmp = (TextView)view.findViewById(R.id.textViewListItem);
+                Log.d(TAG, tmp.getText().toString());
+                Log.d(TAG,"we in itemClickListener, clicked on "+position);
+                Fragment1 tempFrg = new Fragment1().newInstance(tmp.getText().toString());
+                Log.d(TAG,"we created fragment");
                 tempFrg.show(getFragmentManager(), null);
             }
         });
@@ -72,21 +86,19 @@ public class Fragment_with_RecyclerView extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(),add_activity.class);
+                Intent intent = new Intent(getContext(), add_activity.class);
+                startActivity(intent);
+            }
+        });
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), settings.class);
                 startActivity(intent);
             }
         });
     }
 
-//    public void removeItemFromRV(int item_id)
-//    {
-//
-//    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-    }
 
     @Override
     public void onResume() {

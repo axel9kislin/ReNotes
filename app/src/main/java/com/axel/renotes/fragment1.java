@@ -21,21 +21,22 @@ import android.widget.Toast;
  */
 public class Fragment1 extends DialogFragment implements View.OnClickListener {
 
-    int postedID;
+    //int postedID;
+    private String postedName;
     private MyDataBaseHelper helper;
     private Cursor cursor;
     private SQLiteDatabase db;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        postedID = getArguments().getInt("index", 0)+1;
+        postedName = getArguments().getString("index");
         try {
             helper = new MyDataBaseHelper(getContext());
             db = helper.getReadableDatabase();
             cursor = db.query("NOTES",
                     new String[]{"_id", "NAME", "DESCRIPTION", "IMAGE_RESOURCE_ID"},
-                    "_id = ?",
-                    new String[]{Integer.toString(postedID)},
+                    "NAME = ?",
+                    new String[]{postedName},
                     null, null, null);
             Log.d("MyLogs","what have in cursor "+cursor.getCount()+" items");
         }
@@ -63,18 +64,19 @@ public class Fragment1 extends DialogFragment implements View.OnClickListener {
         return v;
     }
 
-    public static Fragment1 newInstance(int index)
+    public static Fragment1 newInstance(String index)
     {
         Fragment1 f = new Fragment1();
         Bundle args = new Bundle();
-        args.putInt("index",index);
+        args.putString("index", index);
         f.setArguments(args);
         return f;
     }
 
     public void btn_editClick (View view)
     {
-        String str_id = String.valueOf(postedID);
+        cursor.moveToFirst();
+        String str_id = String.valueOf(cursor.getInt(0));
         Intent intent = new Intent(getActivity(),activity_change.class); // в случае вызова интента из фрагмента юзаем не this, a getActivity()
         intent.putExtra(activity_change.extra_data,str_id);
         startActivity(intent);                                          //потому что фрагмент не знает заранее из какого активити он будет вызван
@@ -85,7 +87,7 @@ public class Fragment1 extends DialogFragment implements View.OnClickListener {
         //Fragment_with_RecyclerView.removeItemFromRV(postedID);
         helper = new MyDataBaseHelper(getContext());
         db = helper.getWritableDatabase();
-        db.delete("NOTES","_id="+postedID, null);
+        db.delete("NOTES", "_id=" + cursor.getInt(0), null);
         dismiss();
         //adapter.notifyDataSetChanged();
     }

@@ -6,4 +6,7 @@
     <string name="change_labelTitle">Title:</string>
     <string name="label_disc">Description:</string>
     <string name="btn_add">Add</string>
+    <string name="itemMenu_about">About</string>
+    <string name="itemMenu_clearAll">Clear All</string>
+    <string name="clearAll_button">Clear All</string>
 </resources>

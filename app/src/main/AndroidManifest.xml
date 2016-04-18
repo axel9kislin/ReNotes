@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity_change" />
-        <activity android:name=".add_activity"></activity>
+        <activity android:name=".add_activity" />
+        <activity android:name=".settings"></activity>
     </application>
 
 </manifest>
