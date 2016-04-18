@@ -12,9 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -73,10 +70,7 @@ public class Fragment_with_RecyclerView extends Fragment {
             public void onItemClick(View view, int position)
             {
                 TextView tmp = (TextView)view.findViewById(R.id.textViewListItem);
-                Log.d(TAG, tmp.getText().toString());
-                Log.d(TAG,"we in itemClickListener, clicked on "+position);
                 Fragment1 tempFrg = new Fragment1().newInstance(tmp.getText().toString());
-                Log.d(TAG,"we created fragment");
                 tempFrg.show(getFragmentManager(), null);
             }
         });
@@ -105,19 +99,22 @@ public class Fragment_with_RecyclerView extends Fragment {
         super.onResume();
         onActivityCreated(null);//не выход, костыльное решение
         //adapter.notifyDataSetChanged(); не работает
+        Log.d(TAG,"OnResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        //onActivityCreated(null); //для удаления не работает
+        onActivityCreated(null); //для удаления не работает
         //adapter.notifyDataSetChanged();
+        Log.d(TAG,"onPause");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        //onActivityCreated(null);
+        onActivityCreated(null);
         //adapter.notifyDataSetChanged();
+        Log.d(TAG,"onStop");
     }
 }
