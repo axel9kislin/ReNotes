@@ -3,9 +3,6 @@ package com.axel.renotes;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
-import android.widget.FrameLayout;
-
-
 public class MainActivity extends FragmentActivity {
 
     @Override

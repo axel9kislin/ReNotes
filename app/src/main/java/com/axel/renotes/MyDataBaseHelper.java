@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.sql.SQLException;
 
 /**
  * Created by Александр on 11.04.2016.
@@ -29,8 +28,8 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
                 "DESCRIPTION TEXT, " +
                 "IMAGE_RESOURCE_ID TEXT);");
         insertNote(db, "Тестим лист на анимацию ", "Тест вставки русского шрифта", "тратата");
-        insertNote(db, "Тестовая запись 2 ", "надо навтыкать)", "какой-то ресурс");
-        insertNote(db, "запись 3 ", "ага, и сюда", "прыньк");
+        insertNote(db, "Тестовая запись 2 ", "надо вставить что-то", "какой-то ресурс");
+        insertNote(db, "запись 3 ", "начальная запись", "ресурс");
     }
 
     @Override

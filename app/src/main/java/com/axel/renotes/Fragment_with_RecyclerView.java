@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.graphics.RadialGradient;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -13,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -83,6 +84,11 @@ public class Fragment_with_RecyclerView extends Fragment {
 //    }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         onActivityCreated(null);//не выход, костыльное решение
@@ -92,14 +98,14 @@ public class Fragment_with_RecyclerView extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        onActivityCreated(null); //для удаления не работает
+        //onActivityCreated(null); //для удаления не работает
         //adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        onActivityCreated(null);
+        //onActivityCreated(null);
         //adapter.notifyDataSetChanged();
     }
 }
