@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,12 +56,10 @@ public class Fragment1 extends DialogFragment implements View.OnClickListener {
         btnEdit.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
 
-
         cursor.moveToFirst();
         tempTitle.setText(cursor.getString(1));
         tempDisc.setText(cursor.getString(2));
         tempImg.setImageResource(R.drawable.placeholder); //пока что это так, затем переделаю
-
         return v;
     }
 
@@ -78,7 +75,6 @@ public class Fragment1 extends DialogFragment implements View.OnClickListener {
     public void btn_editClick (View view)
     {
         String str_id = String.valueOf(postedID);
-        Log.d("MyLogs", "we in editClick handler");
         Intent intent = new Intent(getActivity(),activity_change.class); // в случае вызова интента из фрагмента юзаем не this, a getActivity()
         intent.putExtra(activity_change.extra_data,str_id);
         startActivity(intent);                                          //потому что фрагмент не знает заранее из какого активити он будет вызван
@@ -86,7 +82,12 @@ public class Fragment1 extends DialogFragment implements View.OnClickListener {
 
     public void btn_deleteClick (View view)
     {
-        Log.d("MyLogs","we in deleteClick handler");
+        //Fragment_with_RecyclerView.removeItemFromRV(postedID);
+        helper = new MyDataBaseHelper(getContext());
+        db = helper.getWritableDatabase();
+        db.delete("NOTES","_id="+postedID, null);
+        dismiss();
+        //adapter.notifyDataSetChanged();
     }
 
 
@@ -101,12 +102,17 @@ public class Fragment1 extends DialogFragment implements View.OnClickListener {
             {btn_deleteClick(v);
                 break;}
         }
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        //незнаю пока как тут изменить, обновить
+        //незнаю пока как тут обновить recyclerView
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        dismiss();
     }
 }

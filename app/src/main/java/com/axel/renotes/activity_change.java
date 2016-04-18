@@ -61,7 +61,7 @@ public class activity_change extends AppCompatActivity {
         int updCount = db.update("NOTES", cv, "_id = ?",
                 new String[]{id_changing});
         Log.d("MyLogs", "updated rows count = " + updCount);
-
+        //по-нормальному, сюда бы вставить notifydatachange, но не знаю как подобраться к адаптеру из ресайкла
         finish();
     }
 

@@ -5,4 +5,5 @@
     <string name="delete">Delete</string>
     <string name="change_labelTitle">Title:</string>
     <string name="label_disc">Description:</string>
+    <string name="btn_add">Add</string>
 </resources>
