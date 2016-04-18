@@ -70,8 +70,9 @@ public class Fragment_with_RecyclerView extends Fragment {
             public void onItemClick(View view, int position)
             {
                 TextView tmp = (TextView)view.findViewById(R.id.textViewListItem);
-                Fragment1 tempFrg = new Fragment1().newInstance(tmp.getText().toString());
-                tempFrg.show(getFragmentManager(), null);
+                Intent intent = new Intent(getContext(), detail.class);
+                intent.putExtra("NAME",tmp.getText().toString());
+                startActivity(intent);
             }
         });
         mRecyclerView.setAdapter(adapter);
@@ -99,22 +100,19 @@ public class Fragment_with_RecyclerView extends Fragment {
         super.onResume();
         onActivityCreated(null);//не выход, костыльное решение
         //adapter.notifyDataSetChanged(); не работает
-        Log.d(TAG,"OnResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        onActivityCreated(null); //для удаления не работает
+        //onActivityCreated(null);
         //adapter.notifyDataSetChanged();
-        Log.d(TAG,"onPause");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        onActivityCreated(null);
+        //onActivityCreated(null);
         //adapter.notifyDataSetChanged();
-        Log.d(TAG,"onStop");
     }
 }
